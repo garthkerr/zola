@@ -3,9 +3,11 @@ pub mod sitemap;
 use std::collections::HashMap;
 use std::fs::{copy, create_dir_all, remove_dir_all};
 use std::path::{Path, PathBuf};
+use std::str;
 use std::sync::{Arc, Mutex, RwLock};
 
 use glob::glob;
+use hyperbuild::hyperbuild_truncate;
 use rayon::prelude::*;
 use sass_rs::{compile_file, Options as SassOptions, OutputStyle};
 use serde_derive::Serialize;
@@ -33,6 +35,7 @@ pub struct Site {
     imageproc: Arc<Mutex<imageproc::Processor>>,
     // the live reload port to be used if there is one
     pub live_reload: Option<u16>,
+    pub minify_html: bool,
     pub output_path: PathBuf,
     content_path: PathBuf,
     pub static_path: PathBuf,
@@ -123,6 +126,7 @@ impl Site {
             tera,
             imageproc: Arc::new(Mutex::new(imageproc)),
             live_reload: None,
+            minify_html: false,
             output_path: path.join("public"),
             content_path,
             static_path,
@@ -716,7 +720,18 @@ impl Site {
         create_directory(&current_path)?;
 
         // Finally, create a index.html file there with the page rendered
-        let output = page.render_html(&self.tera, &self.config, &self.library.read().unwrap())?;
+        let mut output = page.render_html(&self.tera, &self.config, &self.library.read().unwrap())?;
+
+        if self.config.minify_html {
+            let mut code = output.as_bytes().to_vec();
+            match hyperbuild_truncate(&mut code) {
+                Ok(_minified_len) => {
+                    output = std::str::from_utf8(&mut code).unwrap().to_string();
+                }
+                Err((_error_type, _error_position)) => {}
+            };
+        }
+
         create_file(&current_path.join("index.html"), &self.inject_livereload(output))?;
 
         // Copy any asset we found previously into the same directory as the index.html

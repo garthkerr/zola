@@ -171,6 +171,8 @@ pub struct Config {
     pub compile_sass: bool,
     /// Whether to build the search index for the content
     pub build_search_index: bool,
+    /// Whether to minify output
+    pub minify_html: bool,
     /// A list of file glob patterns to ignore when processing the content folder. Defaults to none.
     /// Had to remove the PartialEq derive because GlobSet does not implement it. No impact
     /// because it's unused anyway (who wants to sort Configs?).
@@ -396,6 +398,7 @@ impl Default for Config {
             compile_sass: false,
             mode: Mode::Build,
             build_search_index: false,
+            minify_html: false,
             ignored_content: Vec::new(),
             ignored_content_globset: None,
             translations: HashMap::new(),
