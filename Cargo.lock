@@ -584,12 +584,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "e88a8acf291dafb59c2d96e8f59828f3838bb1a70398823ade51a84de6a6deed"
 
 [[package]]
-name = "fastrie"
-version = "0.0.6"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "16a8e873087682100de15eaccd3f4671c44fe589bd8989a854c061c961884d16"
-
-[[package]]
 name = "filetime"
 version = "0.2.10"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -981,16 +975,14 @@ dependencies = [
 
 [[package]]
 name = "hyperbuild"
-version = "0.0.45"
+version = "0.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "3c258ed774fa45c26e0a460d6dd70ed90dfc81882c381c8d3e2229b3e7f1ec5e"
+checksum = "7d7a567cb94099e7b2d7f9ac13c04b6d2490b6d1562a38d7e6b484115a48d48e"
 dependencies = [
  "cascade",
- "fastrie",
  "phf 0.8.0",
  "serde",
  "serde_json",
- "structopt",
 ]
 
 [[package]]
@@ -2528,30 +2520,6 @@ name = "strsim"
 version = "0.8.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "8ea5119cdb4c55b55d432abb513a0429384878c15dde60cc77b1c99de1a95a6a"
-
-[[package]]
-name = "structopt"
-version = "0.3.15"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "de2f5e239ee807089b62adce73e48c625e0ed80df02c7ab3f068f5db5281065c"
-dependencies = [
- "clap",
- "lazy_static",
- "structopt-derive",
-]
-
-[[package]]
-name = "structopt-derive"
-version = "0.4.8"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "510413f9de616762a4fbeab62509bf15c729603b72d7cd71280fbca431b1c118"
-dependencies = [
- "heck",
- "proc-macro-error",
- "proc-macro2",
- "quote",
- "syn",
-]
 
 [[package]]
 name = "strum"
